@@ -1,6 +1,8 @@
 # weather_app
 
-A new Flutter project.
+A new Flutter project. using open weather api
+![image](https://user-images.githubusercontent.com/53119070/174452996-97ad460f-c077-46bb-8b58-98076d53c712.png)
+
 
 ## Getting Started
 
