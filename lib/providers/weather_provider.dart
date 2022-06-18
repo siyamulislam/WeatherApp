@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/current_model.dart';
@@ -14,14 +13,14 @@ class WeatherProvider extends ChangeNotifier{
 
   Future fetchCurrentData() async{
     final url ='https://api.openweathermap.org/data/2.5/weather?q=dhaka&units=metric&appid=e7e6bbb42b41e6995fd516a684044c88';
-    final res = await http.get(url);
+    final res = await http.get(Uri.parse(url));
     final resMap = json.decode(res.body);
     _currert=CurrentWeatherRes.fromJson(resMap);
     notifyListeners();
   }
   Future fetchForecastData() async{
     final url ='https://api.openweathermap.org/data/2.5/forecast?q=dhaka&units=metric&appid=e7e6bbb42b41e6995fd516a684044c88';
-    final res = await http.get(url);
+    final res = await http.get(Uri.parse(url));
     final resMap = json.decode(res.body);
     _forecast=ForecastWeatherRes.fromJson(resMap);
     // _forecast.list[0].main.temp;

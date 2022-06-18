@@ -274,7 +274,7 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
     id: json["id"],
-    main:   mainEnumValues.map![json["main"]],
+    main:   mainEnumValues.map[json["main"]],
     description: descriptionValues.map[json["description"]],
     icon: iconValues.map[json["icon"]],
   );
