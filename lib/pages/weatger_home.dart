@@ -39,10 +39,12 @@ class _WeatherHomeState extends State<WeatherHome> {
               Text( getFormattedDate(provider.getCurrentWeatherData.dt, 'EEE, dd, MMM, yyyy'),style: const TextStyle(fontSize: 30,)),
               Text( '${provider.getCurrentWeatherData.main.temp.round()}\u00B0C',style: const TextStyle(fontSize: 60,),),
               Text( 'feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,),),
+              Text( 'Location: ${provider.getCurrentWeatherData.name}, ${provider.getCurrentWeatherData.sys.country}',style: const TextStyle(fontSize: 30,),),
               Row(
                 children:  [
-                  Image.network('https://sa.kapamilya.com/absnews/abscbnnews/media/2022/news/05/18/jma.jpg',width: 80,height: 80,fit: BoxFit.cover,),
-                  const Text("Heavy Rain", style: TextStyle(fontSize: 30),)
+                  Image.network('https://openweathermap.org/img/wn/${provider.getCurrentWeatherData.weather[0].icon}@2x.png',width: 80,height: 80,fit: BoxFit.cover,),
+                   Text(provider.getCurrentWeatherData.weather[0].main+', '+
+                     provider.getCurrentWeatherData.weather[0].description, style: const TextStyle(fontSize: 30),)
                 ],)
             ],
           ),
