@@ -17,5 +17,5 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 # WeatherApp
 
-![image](https://user-images.githubusercontent.com/53119070/174452996-97ad460f-c077-46bb-8b58-98076d53c712.png)
+![image](https://user-images.githubusercontent.com/53119070/174455545-9d08547b-d74e-47cd-827e-8f5274d0dac6.png)
 
