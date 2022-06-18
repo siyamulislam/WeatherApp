@@ -7,16 +7,16 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app/weather_utils.dart';
 
 class WeatherProvider extends ChangeNotifier{
-  late CurrentWeatherRes _currert;
+  late CurrentWeatherRes _current;
   late ForecastWeatherRes _forecast;
-  CurrentWeatherRes get getCurrentWeatherData=>_currert;
+  CurrentWeatherRes get getCurrentWeatherData=>_current;
   ForecastWeatherRes get getCurrentForecastData=>_forecast;
 
   Future fetchCurrentData() async{
     final url ='https://api.openweathermap.org/data/2.5/weather?q=dhaka&units=metric&appid=$weather_api_key';
     final res = await http.get(Uri.parse(url));
     final resMap = json.decode(res.body);
-    _currert=CurrentWeatherRes.fromJson(resMap);
+    _current=CurrentWeatherRes.fromJson(resMap);
     notifyListeners();
   }
   Future fetchForecastData() async{

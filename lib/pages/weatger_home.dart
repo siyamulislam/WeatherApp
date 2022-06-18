@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
+import 'package:weather_app/weather_utils.dart';
 
 class WeatherHome extends StatefulWidget {
   const WeatherHome({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class _WeatherHomeState extends State<WeatherHome> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
-    double  date =weatherProvider.getCurrentWeatherData.main.temp;
     weatherProvider.fetchCurrentData().then((_)  {
       setState(() {
         isLoading=false;
@@ -36,7 +36,7 @@ class _WeatherHomeState extends State<WeatherHome> {
         child: Consumer<WeatherProvider>(
           builder: (context, provider, _)=> Column(
             children: [
-              const Text( 'June 18 2022',style: TextStyle(fontSize: 30,)),
+              Text( getFormattedDate(provider.getCurrentWeatherData.dt, 'EEE, dd, MMM, yyyy'),style: const TextStyle(fontSize: 30,)),
               Text( '${provider.getCurrentWeatherData.main.temp.round()}\u00B0C',style: const TextStyle(fontSize: 60,),),
               Text( 'feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,),),
               Row(
