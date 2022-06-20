@@ -85,19 +85,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                         )
                       ],
                     ),
-
-                    // ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemBuilder: (context,index)=>ForecastItem(forecastElement: provider.getCurrentForecastData.list[index]),
-                    //   itemCount: provider.getCurrentForecastData.list.length,
-                    //
-                    // ),
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //
+                    const Spacer(),
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,

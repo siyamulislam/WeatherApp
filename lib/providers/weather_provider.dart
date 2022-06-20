@@ -13,14 +13,14 @@ class WeatherProvider extends ChangeNotifier{
   ForecastWeatherRes get getCurrentForecastData=>_forecast;
 
   Future fetchCurrentData() async{
-    final url ='https://api.openweathermap.org/data/2.5/weather?q=dhaka&units=metric&appid=$weather_api_key';
+    final url ='https://api.openweathermap.org/data/2.5/weather?q=bogra&units=metric&appid=$weather_api_key';
     final res = await http.get(Uri.parse(url));
     final resMap = json.decode(res.body);
     _current=CurrentWeatherRes.fromJson(resMap);
     notifyListeners();
   }
   Future fetchForecastData() async{
-    final url ='https://api.openweathermap.org/data/2.5/forecast?q=dhaka&units=metric&appid=$weather_api_key';
+    final url ='https://api.openweathermap.org/data/2.5/forecast?q=bogra&units=metric&appid=$weather_api_key';
     final res = await http.get(Uri.parse(url));
     final resMap = json.decode(res.body);
     _forecast=ForecastWeatherRes.fromJson(resMap);
