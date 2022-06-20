@@ -20,14 +20,14 @@ class ForecastWeatherRes {
   String cod;
   int message;
   int cnt;
-  List<ListElement> list;
+  List<ForecastElement> list;
   City city;
 
   factory ForecastWeatherRes.fromJson(Map<String, dynamic> json) => ForecastWeatherRes(
     cod: json["cod"],
     message: json["message"],
     cnt: json["cnt"],
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
+    list: List<ForecastElement>.from(json["list"].map((x) => ForecastElement.fromJson(x))),
     city: City.fromJson(json["city"]),
   );
 
@@ -104,8 +104,8 @@ class Coord {
   };
 }
 
-class ListElement {
-  ListElement({
+class ForecastElement {
+  ForecastElement({
   required this.dt,
   required this.main,
   required this.weather,
@@ -129,7 +129,7 @@ class ListElement {
   Sys sys;
   DateTime dtTxt;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+  factory ForecastElement.fromJson(Map<String, dynamic> json) => ForecastElement(
     dt: json["dt"],
     main: MainClass.fromJson(json["main"]),
     weather: List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
@@ -268,48 +268,24 @@ class Weather {
   });
 
   int id;
-  MainEnum? main;
-  Description? description;
-  Icon? icon;
+  String main;
+  String description;
+  String icon;
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
     id: json["id"],
-    main:   mainEnumValues.map[json["main"]],
-    description: descriptionValues.map[json["description"]],
-    icon: iconValues.map[json["icon"]],
+    main: json["main"],
+    description: json["description"],
+    icon: json["icon"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "main": mainEnumValues.reverse![main],
-    "description": descriptionValues.reverse![description],
-    "icon": iconValues.reverse![icon],
+    "main": main,
+    "description": description,
+    "icon": icon,
   };
 }
-
-enum Description { MODERATE_RAIN, LIGHT_RAIN, HEAVY_INTENSITY_RAIN, OVERCAST_CLOUDS }
-
-final descriptionValues = EnumValues({
-  "heavy intensity rain": Description.HEAVY_INTENSITY_RAIN,
-  "light rain": Description.LIGHT_RAIN,
-  "moderate rain": Description.MODERATE_RAIN,
-  "overcast clouds": Description.OVERCAST_CLOUDS
-});
-
-enum Icon { THE_10_D, THE_10_N, THE_04_D }
-
-final iconValues = EnumValues({
-  "04d": Icon.THE_04_D,
-  "10d": Icon.THE_10_D,
-  "10n": Icon.THE_10_N
-});
-
-enum MainEnum { RAIN, CLOUDS }
-
-final mainEnumValues = EnumValues({
-  "Clouds": MainEnum.CLOUDS,
-  "Rain": MainEnum.RAIN
-});
 
 class Wind {
   Wind({

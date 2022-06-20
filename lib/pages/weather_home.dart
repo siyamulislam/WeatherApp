@@ -1,7 +1,11 @@
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/weather_utils.dart';
+import 'package:weather_app/widgets/forecast_item.dart';
 
 class WeatherHome extends StatefulWidget {
   const WeatherHome({Key? key}) : super(key: key);
@@ -21,9 +25,13 @@ class _WeatherHomeState extends State<WeatherHome> {
 
     weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
     weatherProvider.fetchCurrentData().then((_) {
-      setState(() {
-        isLoading = false;
+      weatherProvider.fetchForecastData().then((_){
+        setState(() {
+          isLoading = false;
+        });
       });
+
+
     });
 
     super.didChangeDependencies();
@@ -55,12 +63,10 @@ class _WeatherHomeState extends State<WeatherHome> {
                         fontSize: 60,
                       ),
                     ),
-                    Text(
-                      'feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',
-                      style: const TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
+
+                    Text('feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,), ),
+                    // Text('${provider.getCurrentForecastData.list[0].weather[0].icon}',style: const TextStyle(fontSize: 30,), ),
+
                     Text(
                       'Location: ${provider.getCurrentWeatherData.name}, ${provider.getCurrentWeatherData.sys.country}',
                       style: const TextStyle(
@@ -69,13 +75,8 @@ class _WeatherHomeState extends State<WeatherHome> {
                     ),
                     Row(
                       children: [
-                        Image.network(
-                          'https://openweathermap.org/img/wn/${provider.getCurrentWeatherData.weather[0].icon}@2x.png',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                        Text(
+                        Image.network( 'https://openweathermap.org/img/wn/${provider.getCurrentWeatherData.weather[0].icon}@2x.png', width: 80,height: 80,fit: BoxFit.cover,),
+                         Text(
                           provider.getCurrentWeatherData.weather[0].main +
                               ', ' +
                               provider
@@ -86,10 +87,28 @@ class _WeatherHomeState extends State<WeatherHome> {
                     ),
 
                     // ListView.builder(
-                    //   itemCount: 10,
-                    //   itemBuilder: null,
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (context,index)=>ForecastItem(forecastElement: provider.getCurrentForecastData.list[index]),
+                    //   itemCount: provider.getCurrentForecastData.list.length,
                     //
                     // ),
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: provider.getCurrentForecastData.list.length,
+                        itemBuilder: (context,index)=>ForecastItem(forecastElement: provider.getCurrentForecastData.list[index]),
+
+
+                      ),
+                    ),
+
+
                   ],
                 ),
               ),
