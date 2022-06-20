@@ -149,23 +149,28 @@ class Sys {
    required this.country,
    required this.sunrise,
    required this.sunset,
+    required this.id,
   });
 
 
   String country;
   int sunrise;
   int sunset;
+  int id;
 
   factory Sys.fromJson(Map<String, dynamic> json) => Sys(
+
     country: json["country"],
     sunrise: json["sunrise"],
     sunset: json["sunset"],
+    id: json["id"] ?? 0, //dart: Return null value if JSON doesn't fit the object definition
   );
 
   Map<String, dynamic> toJson() => {
     "country": country,
     "sunrise": sunrise,
     "sunset": sunset,
+    "id": id,
   };
 }
 
