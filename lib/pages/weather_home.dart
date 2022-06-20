@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +29,6 @@ class _WeatherHomeState extends State<WeatherHome> {
         });
       });
 
-
     });
 
     super.didChangeDependencies();
@@ -45,62 +42,68 @@ class _WeatherHomeState extends State<WeatherHome> {
       ),
       body: isLoading
           ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Center(
-              child: Consumer<WeatherProvider>(
-                builder: (context, provider, _) => Column(
-                  children: [
-                    Text(
-                        getFormattedDate(provider.getCurrentWeatherData.dt,
-                            'EEE, dd, MMM, yyyy'),
-                        style: const TextStyle(
-                          fontSize: 30,
-                        )),
-                    Text(
-                      '${provider.getCurrentWeatherData.main.temp.round()}\u00B0C',
-                      style: const TextStyle(
-                        fontSize: 60,
-                      ),
-                    ),
-
-                    Text('feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,), ),
-                    // Text('${provider.getCurrentForecastData.list[0].weather[0].icon}',style: const TextStyle(fontSize: 30,), ),
-
-                    Text(
-                      'Location: ${provider.getCurrentWeatherData.name}, ${provider.getCurrentWeatherData.sys.country}',
+        child: CircularProgressIndicator(),
+      )
+          : Stack(children: [
+        Opacity(opacity:0.5,child: Image.asset('images/weather1.png',height: double.infinity,width:double.infinity,fit: BoxFit.cover,)),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Center(
+            child: Consumer<WeatherProvider>(
+              builder: (context, provider, _) => Column(
+                children: [
+                  Text(
+                      getFormattedDate(provider.getCurrentWeatherData.dt,
+                          'EEE, dd, MMM, yyyy'),
                       style: const TextStyle(
                         fontSize: 30,
-                      ),
+                      )),
+                  Text(
+                    '${provider.getCurrentWeatherData.main.temp.round()}\u00B0C',
+                    style: const TextStyle(
+                      fontSize: 60,
                     ),
-                    Row(
-                      children: [
-                        Image.network( 'https://openweathermap.org/img/wn/${provider.getCurrentWeatherData.weather[0].icon}@2x.png', width: 80,height: 80,fit: BoxFit.cover,),
-                         Text(
-                          provider.getCurrentWeatherData.weather[0].main +
-                              ', ' +
-                              provider
-                                  .getCurrentWeatherData.weather[0].description,
-                          style: const TextStyle(fontSize: 30),
-                        )
-                      ],
+                  ),
+
+                  Text('feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,), ),
+                  // Text('${provider.getCurrentForecastData.list[0].weather[0].icon}',style: const TextStyle(fontSize: 30,), ),
+
+                  Text(
+                    'Location: ${provider.getCurrentWeatherData.name}, ${provider.getCurrentWeatherData.sys.country}',
+                    style: const TextStyle(
+                      fontSize: 30,
                     ),
-                    const Spacer(),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: provider.getCurrentForecastData.list.length,
-                        itemBuilder: (context,index)=>ForecastItem(forecastElement: provider.getCurrentForecastData.list[index]),
+                  ),
+                  Row(
+                    children: [
+                      Image.network( 'https://openweathermap.org/img/wn/${provider.getCurrentWeatherData.weather[0].icon}@2x.png', width: 80,height: 80,fit: BoxFit.cover,),
+                      Text(
+                        provider.getCurrentWeatherData.weather[0].main +
+                            ', ' +
+                            provider
+                                .getCurrentWeatherData.weather[0].description,
+                        style: const TextStyle(fontSize: 30),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: provider.getCurrentForecastData.list.length,
+                      itemBuilder: (context,index)=>ForecastItem(forecastElement: provider.getCurrentForecastData.list[index]),
 
 
-                      ),
                     ),
+                  ),
 
 
-                  ],
-                ),
+                ],
               ),
             ),
+          ),
+        )
+      ],),
     );
   }
 }
