@@ -14,13 +14,12 @@ class WeatherHome extends StatefulWidget {
 
 class _WeatherHomeState extends State<WeatherHome> {
   bool isLoading = true;
-
   late WeatherProvider weatherProvider;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-
+    // getCurrentPosition()
     weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
     weatherProvider.fetchCurrentData().then((_) {
       weatherProvider.fetchForecastData().then((_){
