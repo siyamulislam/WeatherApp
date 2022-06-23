@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/weather_utils.dart';
@@ -15,11 +16,12 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   bool isLoading = true;
   late WeatherProvider weatherProvider;
+  // Position? _position;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    // getCurrentPosition()
+   // Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((position) => print(position.latitude));
     weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
     weatherProvider.fetchCurrentData().then((_) {
       weatherProvider.fetchForecastData().then((_){
@@ -32,6 +34,25 @@ class _WeatherHomeState extends State<WeatherHome> {
 
     super.didChangeDependencies();
   }
+
+  // void getCurrentLocation() async {
+  //   Position position=await _determinePosition();
+  //   setState(() {
+  //     _position=position;
+  //   });
+  // }
+
+  // Future<Position> _determinePosition() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if(permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if(permission == LocationPermission.denied) {
+  //       return Future.error('Location Permissions are denied');
+  //     }
+  //   }
+  //   return await Geolocator.getCurrentPosition();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +76,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                       getFormattedDate(provider.getCurrentWeatherData.dt,
                           'EEE, dd, MMM, yyyy'),
                       style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                       )),
                   Text(
                     '${provider.getCurrentWeatherData.main.temp.round()}\u00B0C',
@@ -64,13 +85,14 @@ class _WeatherHomeState extends State<WeatherHome> {
                     ),
                   ),
 
-                  Text('feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 30,), ),
+                  Text('feels like: ${provider.getCurrentWeatherData.main.feelsLike.round()}\u00B0C',style: const TextStyle(fontSize: 25,), ),
+                  // _position != null ? Text('Current Location: ' + _position.toString()) : const Text('No Location Data'),
                   // Text('${provider.getCurrentForecastData.list[0].weather[0].icon}',style: const TextStyle(fontSize: 30,), ),
 
                   Text(
                     'Location: ${provider.getCurrentWeatherData.name}, ${provider.getCurrentWeatherData.sys.country}',
                     style: const TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                     ),
                   ),
                   Row(
@@ -81,11 +103,12 @@ class _WeatherHomeState extends State<WeatherHome> {
                             ', ' +
                             provider
                                 .getCurrentWeatherData.weather[0].description,
-                        style: const TextStyle(fontSize: 30),
+                        style: const TextStyle(fontSize: 25),
                       )
                     ],
                   ),
                   const Spacer(),
+                  const Text('4 Hour Weather Forecast',style: TextStyle(fontSize: 22,),),
                   Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -103,6 +126,11 @@ class _WeatherHomeState extends State<WeatherHome> {
           ),
         )
       ],),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: getCurrentLocation,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
